@@ -1,11 +1,17 @@
 # Vyuha Show Follow-Through
 
-Independent static marketing site for dvyuha.com. No build step. Publish dist/.
+Static marketing site for dvyuha.com. Publish dist/ with no build dependencies.
 
-Run locally: python3 -m http.server 4188 --directory dist
+Local preview: python3 -m http.server 4188 --directory dist
 
-Render: create Static Site from a connected Git repository, use dist as publish directory. render.yaml is included for Blueprint setup if desired. Do not change domain DNS until deployment is verified and the custom domains have been added at Render.
+Production: https://dvyuha.com
+Render: https://vyuha-sft.onrender.com
+Source: https://github.com/dewangoltikarv-arch/vyuha-sft-site
 
-The site uses no analytics or lead-storage backend. Enquiries use mailto; booking links use the existing Vyuha Cal.com URL. Google Fonts is loaded externally, with local fallbacks. No customer outcomes or testimonials are fabricated. Pricing is scoped by enquiry.
+The editorial redesign uses the user's supplied Vyuha reference imagery from https://vyuha-follow-through.sites.tab.bot/ (assets under img/), copied into dist/assets for independent hosting. Images are illustrative. Google Fonts provides Cormorant Garamond and DM Sans with local fallbacks.
 
-Product source: Workspace/02_Product/02 Product - SFT/vyuha_show_follow_through_product.md (30 September 2026). Published claims should be reviewed when scope changes.
+The phase tabs support keyboard navigation. Reveal motion respects reduced-motion preferences and content remains available if JavaScript is disabled. The enquiry form opens an email draft; it does not store or send enquiries through a backend. Booking uses the existing Vyuha Cal.com URL.
+
+Product source: Workspace/02_Product/02 Product - SFT/vyuha_show_follow_through_product.md (30 September 2026). No fabricated outcomes, testimonials, or fixed public pricing.
+
+Render uses the public repository. Deploy updates explicitly through the Render dashboard when public-repository auto-deploy is unavailable. Website DNS: root A 216.24.57.1 and www CNAME vyuha-sft.onrender.com. Keep existing mail records intact.
