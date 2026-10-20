@@ -26,18 +26,14 @@ function chooseStage(tab, focus=false) {
  const data = stages[tab.dataset.stage];
  tabs.forEach(t=>{const active=t===tab;t.setAttribute('aria-selected',String(active));t.tabIndex=active?0:-1;});
  const panel=document.getElementById('stage-panel');panel.setAttribute('aria-labelledby',tab.id);
- document.getElementById('stage-label').textContent=data.label;
  document.getElementById('stage-title').innerHTML=data.title;
  document.getElementById('stage-description').textContent=data.description;
  const img=document.getElementById('stage-image');img.src='/assets/'+data.image;img.alt=data.alt;
- document.getElementById('stage-caption').textContent=data.caption;
  const list=document.getElementById('stage-list');list.replaceChildren(...data.items.map(text=>{const li=document.createElement('li');li.textContent=text;return li;}));
  document.getElementById('stage-note').textContent=data.note;
  if(focus)tab.focus();
 }
 tabs.forEach((tab,index)=>{tab.addEventListener('click',()=>chooseStage(tab));tab.addEventListener('keydown',event=>{let next;if(event.key==='ArrowRight')next=(index+1)%tabs.length;else if(event.key==='ArrowLeft')next=(index+tabs.length-1)%tabs.length;else if(event.key==='Home')next=0;else if(event.key==='End')next=tabs.length-1;else return;event.preventDefault();chooseStage(tabs[next],true);});});
-const examples={note:'<span class="eyebrow">CAPTURE THE CONTEXT</span><p>“Looking for a supplier for the next quarter. Asked about lead times and territory coverage.”</p><div class="file-field"><span>INTEREST</span><strong>Supplier fit + availability</strong></div><div class="file-field"><span>OPEN QUESTION</span><strong>Lead times for the stated requirement</strong></div>',action:'<span class="eyebrow">GIVE THE CONVERSATION AN OWNER</span><p>A reply built around the lead-time question. A clear next step, once your team approves the answer.</p><div class="file-field"><span>OWNER</span><strong>Your commercial contact</strong></div><div class="file-field"><span>NEXT ACTION</span><strong>Approve the response → propose a call</strong></div>'};
-document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-view]').forEach(b=>{b.classList.toggle('selected',b===button);b.setAttribute('aria-pressed',String(b===button));});document.getElementById('conversation-body').innerHTML=examples[button.dataset.view];}));
 document.getElementById('show-form').addEventListener('submit',event=>{
  event.preventDefault();const data=new FormData(event.currentTarget);
  const company=String(data.get('company')).trim(),show=String(data.get('show')).trim(),dates=String(data.get('dates')).trim();
