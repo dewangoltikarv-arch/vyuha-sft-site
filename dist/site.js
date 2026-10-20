@@ -34,11 +34,22 @@ function chooseStage(tab, focus=false) {
  if(focus)tab.focus();
 }
 tabs.forEach((tab,index)=>{tab.addEventListener('click',()=>chooseStage(tab));tab.addEventListener('keydown',event=>{let next;if(event.key==='ArrowRight')next=(index+1)%tabs.length;else if(event.key==='ArrowLeft')next=(index+tabs.length-1)%tabs.length;else if(event.key==='Home')next=0;else if(event.key==='End')next=tabs.length-1;else return;event.preventDefault();chooseStage(tabs[next],true);});});
-document.getElementById('show-form').addEventListener('submit',event=>{
- event.preventDefault();const data=new FormData(event.currentTarget);
- const company=String(data.get('company')).trim(),show=String(data.get('show')).trim(),dates=String(data.get('dates')).trim();
- if(!company||!show||!dates){document.getElementById('form-note').textContent='Please add your company, show name, and dates.';return;}
- const body=`Hi Dewang,\n\nI’d like to discuss Show Follow-Through.\n\nCompany: ${company}\nShow: ${show}\nDates: ${dates}\nWho we want to meet: ${String(data.get('buyer')).trim()}\n\n`;
- location.href='mailto:dewang@dvyuha.com?subject='+encodeURIComponent('Show Follow-Through — '+show)+'&body='+encodeURIComponent(body);
- document.getElementById('form-note').textContent='Your email draft is ready in your email app. If it did not open, email dewang@dvyuha.com directly.';
+const bookingDialog = document.getElementById('booking-dialog');
+const bookingFrame = document.getElementById('booking-frame');
+let bookingTrigger;
+document.querySelectorAll('[data-booking]').forEach(button => button.addEventListener('click', () => {
+ bookingTrigger = button;
+ if (!bookingFrame.getAttribute('src')) bookingFrame.src = bookingFrame.dataset.src;
+ bookingDialog.showModal();
+ document.body.classList.add('booking-open');
+}));
+document.querySelector('.booking-close').addEventListener('click', () => bookingDialog.close());
+bookingDialog.addEventListener('click', event => {
+ if (event.target !== bookingDialog) return;
+ const bounds = bookingDialog.getBoundingClientRect();
+ if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) bookingDialog.close();
+});
+bookingDialog.addEventListener('close', () => {
+ document.body.classList.remove('booking-open');
+ if (bookingTrigger) bookingTrigger.focus();
 });
